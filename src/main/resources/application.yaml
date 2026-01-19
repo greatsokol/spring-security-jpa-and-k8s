@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: spring-security-jpa
+
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://postgres.pg/postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+#    root: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+
+app:
+  jwt:
+    secret: djkjhdgkjhdhgfkjaghdfkjasgdfkjhgasdkjfgas
+    lifetime: 600000

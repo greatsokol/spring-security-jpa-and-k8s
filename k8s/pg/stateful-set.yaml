@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: pg
+  labels:
+    app: postgres
+    rel: stable
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: postgres
+        rel: stable
+    spec:
+      containers:
+        - name: ssjb-postgres-container
+          image: postgres
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_DB
+              value: ssjb
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres-password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: pg-volume
+          ports:
+            - name: http
+              containerPort: 5432
+              protocol: TCP
+      restartPolicy: Always
+      volumes:
+        - name: pg-volume
+          persistentVolumeClaim:
+            claimName: pg-vol-claim
+
