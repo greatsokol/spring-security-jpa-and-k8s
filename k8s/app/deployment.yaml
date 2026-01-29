@@ -23,10 +23,11 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsNonRoot: true
+            readOnlyRootFilesystem: true
           volumeMounts:
-              - name: https-cert
-                mountPath: /app/cert
-                readOnly: true
+            - name: https-cert
+              mountPath: /app/cert
+              readOnly: true
           ports:
             - name: https
               containerPort: 8443
@@ -48,4 +49,3 @@ spec:
         - name: https-cert
           secret:
             secretName: https-cert
-
