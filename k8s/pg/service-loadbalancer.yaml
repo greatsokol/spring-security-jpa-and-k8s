@@ -10,7 +10,7 @@ spec:
     app: postgres
     rel: stable
   ports:
-    - name: http
+    - name: pgport
       protocol: TCP
       port: 5432
-      targetPort: http
+      targetPort: pgport

@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: spring-security-jpa-backend-lb
   namespace: ssjb
+  labels:
+    app: ssjb
+    rel: stable
 spec:
   sessionAffinity: None
   externalTrafficPolicy: Local
@@ -10,10 +13,6 @@ spec:
     app: ssjb
     rel: stable
   ports:
-    - name: http
-      protocol: TCP
-      port: 8080
-      targetPort: http
     - name: https
       protocol: TCP
       port: 8443

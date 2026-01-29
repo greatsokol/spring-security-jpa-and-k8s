@@ -2,4 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: ssjb
+  labels:
+    app: ssjb
+    rel: stable
   

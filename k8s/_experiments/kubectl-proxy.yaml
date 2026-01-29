@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubectl-proxy
+  labels:
+    role: experimental
+spec:
+  containers:
+    - name: kubectl-proxy
+      image: luksa/kubectl-proxy:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+        - name: kubectl-proxy
+          containerPort: 8080
+          protocol: TCP
+  restartPolicy: Always
+  

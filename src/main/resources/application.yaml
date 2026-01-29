@@ -5,11 +5,28 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://postgres.pg/postgres
+    url: jdbc:postgresql://postgres.pg/ssjb
+#    url: jdbc:postgresql://localhost:5432/postgres
 
   jpa:
     hibernate:
       ddl-auto: update
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db-changelog.xml
+
+server:
+  ssl:
+    enabled: true
+    certificate: /app/cert/localhost.crt
+    certificate-private-key: /app/cert/localhost.key
+  port: 8443
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 logging:
   level:

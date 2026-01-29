@@ -13,31 +13,39 @@ spec:
       app: ssjb
   template:
     metadata:
-      name: spring-security-jpa-backend
       labels:
         app: ssjb
         rel: stable
     spec:
       containers:
         - name: ssjb-container
-          image: spring-security-jpa-backend
+          image: spring-security-jpa-backend:v5
           imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+          volumeMounts:
+              - name: https-cert
+                mountPath: /app/cert
+                readOnly: true
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
             - name: https
               containerPort: 8443
               protocol: TCP
           livenessProbe:
             httpGet:
-              port: 8080
+              scheme: HTTPS
+              port: https
               path: /actuator/health/liveness
             initialDelaySeconds: 30
           readinessProbe:
             httpGet:
-              port: 8080
+              scheme: HTTPS
+              port: https
               path: /actuator/health/readiness
             initialDelaySeconds: 20
       restartPolicy: Always
+      volumes:
+        - name: https-cert
+          secret:
+            secretName: https-cert
 

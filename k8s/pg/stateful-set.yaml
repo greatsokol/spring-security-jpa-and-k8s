@@ -27,21 +27,34 @@ spec:
               value: ssjb
             - name: POSTGRES_USER
               value: postgres
+            - name: POSTGRES_LOG_LEVEL
+              value: ALL
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
                   name: postgres-password
+          #          command: ["postgres", "-c", "log_statement=all"]
           volumeMounts:
             - mountPath: /var/lib/postgresql
-              name: pg-volume
+#              name: pg-volume
+              name: pg-volume-pvc
           ports:
-            - name: http
+            - name: pgport
               containerPort: 5432
               protocol: TCP
       restartPolicy: Always
-      volumes:
-        - name: pg-volume
-          persistentVolumeClaim:
-            claimName: pg-vol-claim
+#      volumes:
+#        - name: pg-volume
+#          persistentVolumeClaim:
+#            claimName: pg-vol-claim
+  volumeClaimTemplates:
+    - metadata:
+        name: pg-volume-pvc
+      spec:
+        resources:
+          requests:
+            storage: 1Gi
+        accessModes:
+          - ReadWriteOnce
 
