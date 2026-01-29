@@ -28,6 +28,9 @@ spec:
             - name: https-cert
               mountPath: /app/cert
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
+              readOnly: false
           ports:
             - name: https
               containerPort: 8443
@@ -49,3 +52,5 @@ spec:
         - name: https-cert
           secret:
             secretName: https-cert
+        - name: tmp
+          emptyDir:
